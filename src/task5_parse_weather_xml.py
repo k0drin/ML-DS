@@ -39,14 +39,15 @@ def save_to_csv(data, filename="parsed_weather_data.csv"):
         data (list of dict): Parsed weather data.
         filename (str): Name of the CSV file.
     """
-    fieldnames = data[0].keys() if data else []
+    fieldnames = [key.capitalize() for key in data[0].keys()] if data else []
     
     with open(filename, mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
 
         writer.writeheader()
         for row in data:
-            writer.writerow(row)
+            row_capitalized = {key.capitalize(): value for key, value in row.items()}
+            writer.writerow(row_capitalized)
 
 
 if __name__ == "__main__":
